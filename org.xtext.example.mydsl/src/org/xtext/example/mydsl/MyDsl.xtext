@@ -1,0 +1,21 @@
+grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.xbase.Xbase
+
+generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
+
+Model:
+	'Model' '{'
+	assertRules+=AssertRule+
+	'}';
+
+	//Bar:
+//	{Bar}
+//	expr=XExpression?;
+AssertRule:
+	'assert' 'check'
+	'has' ((error?='error' spec=VerifySpec) |
+	(prompt?='prompt' spec=VerifySpec) |
+	(noError?='no' 'error'));
+
+VerifySpec:
+	{VerifySpec}
+	('[' verifyId=XExpression ']')? ('with' verifyMessage=XExpression)?;
